@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frutiger Aero — Base</title>
+  <link href="https://fonts.googleapis.com/css2?family=Myriad+Pro:wght@300;400;600&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sky-top: #4fc3f7;
+      --sky-mid: #81d4fa;
+      --sky-bot: #b3e5fc;
+      --grass: #66bb6a;
+      --grass-dark: #388e3c;
+      --glass-bg: rgba(255,255,255,0.28);
+      --glass-border: rgba(255,255,255,0.65);
+      --glass-shadow: 0 8px 32px rgba(30,120,180,0.18);
+      --text-dark: #1a3a4a;
+      --text-mid: #2e6082;
+      --accent-blue: #0288d1;
+      --accent-green: #43a047;
+      --shine: rgba(255,255,255,0.55);
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'Nunito', 'Myriad Pro', Tahoma, sans-serif;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── SKY BACKGROUND ── */
+    body {
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(255,255,255,0.55) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 10%, rgba(200,240,255,0.6) 0%, transparent 45%),
+        linear-gradient(180deg,
+          #2196f3 0%,
+          #4fc3f7 25%,
+          #81d4fa 50%,
+          #b3e5fc 70%,
+          #c8e6c9 85%,
+          #66bb6a 100%
+        );
+      background-attachment: fixed;
+    }
+
+    /* ── CLOUDS ── */
+    .clouds {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 50vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .cloud {
+      position: absolute;
+      background: rgba(255,255,255,0.85);
+      border-radius: 999px;
+      filter: blur(2px);
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .c1 { width: 160px; height: 48px; top: 8%; left: 5%; animation: drift 28s linear infinite; }
+    .c1::before { width: 80px; height: 64px; top: -28px; left: 24px; }
+    .c1::after  { width: 60px; height: 50px; top: -20px; left: 70px; }
+
+    .c2 { width: 220px; height: 56px; top: 14%; left: 55%; animation: drift 38s linear infinite; animation-delay: -12s; }
+    .c2::before { width: 100px; height: 80px; top: -36px; left: 40px; }
+    .c2::after  { width: 80px; height: 60px; top: -24px; left: 110px; }
+
+    .c3 { width: 120px; height: 36px; top: 4%; left: 35%; animation: drift 22s linear infinite; animation-delay: -6s; opacity:.7; }
+    .c3::before { width: 64px; height: 52px; top: -22px; left: 18px; }
+    .c3::after  { width: 50px; height: 40px; top: -16px; left: 55px; }
+
+    @keyframes drift {
+      from { transform: translateX(-300px); }
+      to   { transform: translateX(110vw); }
+    }
+
+    /* ── GRASS STRIP ── */
+    .grass-strip {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%; height: 120px;
+      background: linear-gradient(180deg, #66bb6a 0%, #388e3c 100%);
+      z-index: 0;
+      border-top: 3px solid rgba(255,255,255,0.3);
+      box-shadow: 0 -4px 24px rgba(0,80,0,0.25);
+    }
+    .grass-strip::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 100%);
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.42) 0%, rgba(200,235,255,0.22) 100%);
+      backdrop-filter: blur(14px) saturate(1.6);
+      -webkit-backdrop-filter: blur(14px) saturate(1.6);
+      border-bottom: 1.5px solid var(--glass-border);
+      box-shadow: 0 2px 18px rgba(30,120,200,0.12);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo .orb {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff 0%, #4fc3f7 45%, #0288d1 100%);
+      border: 2px solid rgba(255,255,255,0.8);
+      box-shadow: 0 2px 12px rgba(2,136,209,0.45), inset 0 1px 3px rgba(255,255,255,0.7);
+    }
+    .nav-logo span {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 4px rgba(255,255,255,0.8);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.55);
+    }
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.55);
+      color: var(--accent-blue);
+    }
+
+    .nav-btn {
+      padding: 8px 22px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(180deg, #4fc3f7 0%, #0288d1 55%, #01579b 100%);
+      border: 2px solid rgba(255,255,255,0.7);
+      box-shadow: 0 2px 10px rgba(2,136,209,0.4), inset 0 1px 0 rgba(255,255,255,0.45);
+      cursor: pointer;
+      text-shadow: 0 1px 2px rgba(0,50,100,0.3);
+      transition: filter 0.2s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+    .nav-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 14rem;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.38);
+      border: 1.5px solid rgba(255,255,255,0.75);
+      backdrop-filter: blur(8px);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(30,130,200,0.12);
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #a5f3fc, #0288d1);
+      box-shadow: 0 0 6px rgba(2,136,209,0.6);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-shadow:
+        0 2px 0 rgba(0,80,140,0.18),
+        0 4px 24px rgba(2,100,180,0.22),
+        0 1px 0 rgba(255,255,255,0.7);
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: #e0f7fa;
+      text-shadow: 0 0 40px rgba(129,212,250,0.7), 0 2px 0 rgba(0,80,140,0.22);
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.92);
+      max-width: 540px;
+      line-height: 1.7;
+      text-shadow: 0 1px 6px rgba(0,60,120,0.2);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      padding: 14px 36px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(180deg, #4dd0e1 0%, #0288d1 50%, #01579b 100%);
+      border: 2.5px solid rgba(255,255,255,0.7);
+      box-shadow:
+        0 6px 28px rgba(2,136,209,0.45),
+        0 1px 0 rgba(255,255,255,0.5) inset,
+        0 -2px 0 rgba(0,60,120,0.3) inset;
+      cursor: pointer;
+      text-shadow: 0 1px 3px rgba(0,50,100,0.35);
+      transition: transform 0.15s, filter 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+    .btn-ghost {
+      padding: 14px 36px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      background: rgba(255,255,255,0.45);
+      border: 2px solid rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 18px rgba(30,120,200,0.1), inset 0 1px 0 rgba(255,255,255,0.7);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.68); transform: translateY(-2px); }
+
+    /* ── CARDS ── */
+    .cards-section {
+      padding: 2rem 2rem 8rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .glass-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.52) 0%, rgba(200,235,255,0.28) 100%);
+      border: 1.5px solid rgba(255,255,255,0.72);
+      border-radius: 20px;
+      padding: 1.75rem 1.5rem;
+      backdrop-filter: blur(16px) saturate(1.5);
+      -webkit-backdrop-filter: blur(16px) saturate(1.5);
+      box-shadow:
+        0 8px 32px rgba(30,100,180,0.14),
+        inset 0 1px 0 rgba(255,255,255,0.7),
+        inset 0 -1px 0 rgba(30,100,200,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, transparent 100%);
+      border-radius: 20px 20px 0 0;
+      pointer-events: none;
+    }
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(30,100,180,0.22), inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+    .card-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid rgba(255,255,255,0.7);
+      box-shadow: 0 3px 12px rgba(30,100,200,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    .icon-blue  { background: radial-gradient(circle at 35% 30%, #e0f7fa, #0288d1); }
+    .icon-green { background: radial-gradient(circle at 35% 30%, #f1f8e9, #43a047); }
+    .icon-cyan  { background: radial-gradient(circle at 35% 30%, #e0f2f1, #00897b); }
+
+    .glass-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .glass-card p {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      text-shadow: 0 1px 4px rgba(0,50,100,0.2);
+      background: rgba(0,0,0,0.06);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nubes flotantes -->
+  <div class="clouds" aria-hidden="true">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+  </div>
+
+  <!-- Franja de césped -->
+  <div class="grass-strip" aria-hidden="true"></div>
+
+  <div class="page">
+
+    <!-- NAVBAR -->
+    <nav>
+      <div class="nav-logo">
+        <div class="orb" aria-hidden="true"></div>
+        <span>AeroVista</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Galería</a></li>
+        <li><a href="#">Explore</a></li>
+        <li><a href="#">Acerca</a></li>
+      </ul>
+      <button class="nav-btn">Ingresar</button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-badge">
+        <div class="dot"></div>
+        Estilo Frutiger Aero
+      </div>
+      <h1>Donde la <em>naturaleza</em><br>se une con la tecnología</h1>
+      <p>Una experiencia visual limpia y refrescante, inspirada en la estética cristalina y orgánica de los años 2000.</p>
+      <div class="hero-actions">
+        <button class="btn-primary">Explorar ahora</button>
+        <button class="btn-ghost">Saber más</button>
+      </div>
+    </section>
+
+    <!-- CARDS -->
+    <section class="cards-section">
+      <div class="cards-grid">
+
+        <div class="glass-card">
+          <div class="card-icon icon-blue" aria-hidden="true">💧</div>
+          <h3>Fluidez Natural</h3>
+          <p>Interfaces que fluyen como el agua, suaves y translúcidas sobre cualquier fondo.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-icon icon-green" aria-hidden="true">🌿</div>
+          <h3>Elementos Vivos</h3>
+          <p>Inspiración orgánica directamente de la naturaleza, con tonos verdes y azules vibrantes.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-icon icon-cyan" aria-hidden="true">✨</div>
+          <h3>Cristal y Luz</h3>
+          <p>Superficies brillantes con reflejos internos que capturan el espíritu del Aero clásico.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      &copy; 2026 AeroVista — Página base estilo Frutiger Aero
+    </footer>
+
+  </div>
+
+</body>
+</html>
